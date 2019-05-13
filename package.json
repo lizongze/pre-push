@@ -1,6 +1,6 @@
 {
   "name": "pre-push",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Automatically install pre-push hooks for your npm modules.",
   "main": "index.js",
   "scripts": {
