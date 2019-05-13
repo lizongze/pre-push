@@ -1,3 +1,6 @@
+## 2.0.0
+- support for rush
+
 ## 1.0.2
 - Check `/usr/local/bin/node` if we cannot find the binaries in the PATH.
 
@@ -15,7 +18,7 @@
   objects.
 - The refactor made it possible to test most of the internals so we now have
   90%+ coverage.
-- And the list goes on. 
+- And the list goes on.
 
 ## 0.0.9
 - Added missing uninstall hook to remove and restore old scripts.

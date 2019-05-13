@@ -1,0 +1,11 @@
+{
+	"npmVersion": "5.3.0",
+	"rushVersion": "4.3.3",
+	"projects": [
+		{
+			"packageName": "@demo",
+			"projectFolder": "apps/demo",
+			"shouldPublish": false
+		}
+	]
+}

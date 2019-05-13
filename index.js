@@ -6,6 +6,9 @@ var spawn = require('cross-spawn')
   , util = require('util')
   , tty = require('tty');
 
+var argv = process.argv.slice(2);
+var offsetPath = argv[0];
+
 /**
  * Representation of a hook runner.
  *
@@ -26,6 +29,7 @@ function Hook(fn, options) {
   this.root = '';             // The root location of the .git folder.
   this.status = '';           // Contents of the `git status`.
   this.exit = fn;             // Exit function.
+  this.offsetPath = offsetPath;
 
   this.initialize();
 }
@@ -176,6 +180,10 @@ Hook.prototype.initialize = function initialize() {
 
   this.root = this.root.stdout.toString().trim();
 
+  if (argv[0]) {
+	this.root = path.join(this.root, this.offsetPath);
+  }
+
   try {
     this.json = require(path.join(this.root, 'package.json'));
     this.parse();
@@ -213,8 +221,8 @@ Hook.prototype.run = function runner() {
     // that the way they capture the output which us using input redirection and
     // this doesn't have the required `isAtty` information that libraries use to
     // output colors resulting in script output that doesn't have any color.
-    //
-    
+	//
+
     let cmd = process.platform=='win32' ? 'npm.cmd' : 'npm';
     spawn(cmd, ['run', script, '--silent'], {
       env: process.env,
