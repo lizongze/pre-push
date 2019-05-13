@@ -49,7 +49,7 @@ if [[ $res -ne 0 ]]; then
 	if [[ $* == *--dry-run* ]]; then
 		echo "--dry-run: execute this hook without side affects"
 	else
-		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push'))")"
+		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")"
 	fi
 else
 	# support rush
@@ -67,16 +67,16 @@ else
 			# hit
 			offsetPath=`echo './'$project`
 			cd $offsetPath
-			"$BINARY" -e "require('pre-push')" 2>dev>null
+			"$BINARY" -e "require('pre-push-for-rush')" 2>dev>null
 			res=$?
 			if [[ $res -ne 0 ]]; then
-			    msg="$offsetPath Error: Cannot find module 'pre-push'"
+			    msg="$offsetPath Error: Cannot find module 'pre-push-for-rush'"
 			else
 				echo $offsetPath
 				if [[ $* == *--dry-run* ]]; then
 					echo "--dry-run: execute this hook without side affects"
 				else
-					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push'))")" $project
+					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")" $project
 				fi
 			fi
 			cd $dir
