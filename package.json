@@ -1,7 +1,7 @@
 {
   "name": "pre-push",
   "version": "2.0.0",
-  "description": "Automatically install pre-push hooks for your npm modules.",
+  "description": "Automatically install pre-push hooks for your npm modules which support rush.",
   "main": "index.js",
   "scripts": {
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dflourusso/pre-push.git"
+    "url": "git://github.com/lizongze/pre-push.git"
   },
   "keywords": [
     "git",
@@ -26,8 +26,8 @@
     "test",
     "development"
   ],
-  "author": "dflourusso",
-  "homepage": "https://github.com/dflourusso/pre-push",
+  "author": "zongze.li",
+  "homepage": "https://github.com/lizongze/pre-push",
   "license": "MIT",
   "dependencies": {
     "cross-spawn": "^5.0.1",
@@ -38,9 +38,9 @@
     "assume": "~1.5.0",
     "istanbul": "0.4.x",
     "mocha": "~3.3.0",
-    "pre-push": "git://github.com/dflourusso/pre-push.git"
+    "pre-push": "git://github.com/lizongze/pre-push.git"
   },
   "bugs": {
-    "url": "https://github.com/dflourusso/pre-push/issues"
+    "url": "https://github.com/lizongze/pre-push/issues"
   }
 }
