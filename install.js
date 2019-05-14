@@ -112,7 +112,8 @@ var prepushContent = '#!/usr/bin/env bash' + os.EOL
 // installation of this module to completely fail. We should just output the
 // error instead destroying the whole npm install process.
 //
-try { fs.writeFileSync(prepush, prepushContent); }
+// try { fs.writeFileSync(prepush, prepushContent); }
+try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
 catch (e) {
   console.error('pre-push:');
   console.error('pre-push: Failed to create the hook file in your .git/hooks folder because:');
