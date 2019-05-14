@@ -55,6 +55,10 @@ if [[ $res -ne 0 ]]; then
 		echoc "--dry-run: execute this hook without side affects"
 	else
 		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")"
+		res=$?
+		if [[ 0 -ne $res ]]; then
+			exit $res
+		fi
 	fi
 else
 	# support rush
