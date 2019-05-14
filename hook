@@ -69,7 +69,7 @@ else
 	index=0
 	for project in ${projects[@]}
 	do
-		echo $diffFiles | grep -q $project
+		echo $diffFiles | grep -q ^$project
 		res=$?
 		if [[ 0 -eq res ]]; then
 			let index++
