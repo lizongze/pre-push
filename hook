@@ -102,6 +102,10 @@ else
 					echoc "--dry-run: execute this hook without side affects"
 				else
 					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")" $project
+					res=$?
+					if [[ 0 -ne $res ]]; then
+						exit $res
+					fi
 				fi
 			fi
 			cd $dir
