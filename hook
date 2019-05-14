@@ -47,7 +47,7 @@ if [[ -z "$BINARY" ]]; then
 	exit 1
 fi
 
-"$BINARY" -e "require('./rush.json')" 2>dev>null
+"$BINARY" -e "require('./rush.json')" 2> /dev/null
 res=$?
 
 if [[ $res -ne 0 ]]; then
