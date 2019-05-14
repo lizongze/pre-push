@@ -115,6 +115,10 @@ var prepushContent = '#!/usr/bin/env bash' + os.EOL
 // try { fs.writeFileSync(prepush, prepushContent); }
 try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
 catch (e) {
+  hookRelativeUnixPath = path.join('.', 'common', 'temp', hookRelativeUnixPath)
+}
+try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
+catch (e) {
   console.error('pre-push:');
   console.error('pre-push: Failed to create the hook file in your .git/hooks folder because:');
   console.error('pre-push: '+ e.message);
