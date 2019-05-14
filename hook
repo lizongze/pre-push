@@ -91,7 +91,7 @@ else
 			# hit
 			offsetPath=`echo './'$project`
 			cd $offsetPath
-			"$BINARY" -e "require('pre-push-for-rush')" 2>dev>null
+			"$BINARY" -e "require('pre-push-for-rush')" 2> /dev/null
 			res=$?
 			if [[ $res -ne 0 ]]; then
 			    msg="$offsetPath Error: Cannot find module 'pre-push-for-rush'"
