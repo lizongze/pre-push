@@ -113,6 +113,10 @@ var prepushContent = '#!/usr/bin/env bash' + os.EOL
 // error instead destroying the whole npm install process.
 //
 // try { fs.writeFileSync(prepush, prepushContent); }
+fs.readdir('./',(err,files)=> {
+	if(err) throw err;
+	console.log('readdir ---- ', files);
+});
 try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
 catch (e) {
   hookRelativeUnixPath = path.join('.', 'common', 'temp', hookRelativeUnixPath)
