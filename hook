@@ -85,7 +85,7 @@ else
 
 	for project in ${projects[@]}
 	do
-		echo $diffFiles | grep -q $project
+		echo $diffFiles | grep -q ^$project
 		res=$?
 		if [[ 0 -eq $res ]]; then
 			# hit
