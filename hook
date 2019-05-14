@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echoc() {
+	# 输出黄色字
+	echo -e "\n\033[33m $1 \033[0m\n"
+}
+
 HAS_NODE=`which node 2> /dev/null || which nodejs 2> /dev/null || which iojs 2> /dev/null`
 
 #
@@ -47,7 +52,7 @@ res=$?
 
 if [[ $res -ne 0 ]]; then
 	if [[ $* == *--dry-run* ]]; then
-		echo "--dry-run: execute this hook without side affects"
+		echoc "--dry-run: execute this hook without side affects"
 	else
 		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")"
 	fi
@@ -56,14 +61,33 @@ else
 	projects=(
 	`$BINARY -e "require('./rush.json').projects.forEach(item => console.log(item.projectFolder + '/'));"`
 	)
-	diffFiles=`git diff --name-only`
+    curBranch=`git rev-parse --abbrev-ref HEAD`
+	git fetch origin $curBranch
+	diffFiles=`git diff HEAD origin/$curBranch --name-only`
 	cd $dir
 
+	index=0
 	for project in ${projects[@]}
 	do
 		echo $diffFiles | grep -q $project
 		res=$?
 		if [[ 0 -eq res ]]; then
+			let index++
+			echoc "$project --changed"
+		fi
+	done
+
+	if [[ 1 -ne $index ]]; then
+		echoc "$index: changed"
+		echoc "skip for not one project changed!"
+		exit 0
+	fi
+
+	for project in ${projects[@]}
+	do
+		echo $diffFiles | grep -q $project
+		res=$?
+		if [[ 0 -eq $res ]]; then
 			# hit
 			offsetPath=`echo './'$project`
 			cd $offsetPath
@@ -71,10 +95,11 @@ else
 			res=$?
 			if [[ $res -ne 0 ]]; then
 			    msg="$offsetPath Error: Cannot find module 'pre-push-for-rush'"
+				# echoc $msg
 			else
-				echo $offsetPath
+				echoc $offsetPath
 				if [[ $* == *--dry-run* ]]; then
-					echo "--dry-run: execute this hook without side affects"
+					echoc "--dry-run: execute this hook without side affects"
 				else
 					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")" $project
 				fi

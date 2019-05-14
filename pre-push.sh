@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echoc() {
+	# 输出黄色字
+	echo -e "\n\033[33m $1 \033[0m\n"
+}
+
 NODE=`which node 2> /dev/null`
 NODEJS=`which nodejs 2> /dev/null`
 IOJS=`which iojs 2> /dev/null`
@@ -20,8 +25,27 @@ fi
 projects=(
 `$curNode -e "require('./rush.json').projects.forEach(item => console.log(item.projectFolder + '/'));"`
 )
-diffFiles=`git diff --name-only`
+curBranch=`git rev-parse --abbrev-ref HEAD`
+git fetch origin $curBranch
+diffFiles=`git diff HEAD origin/$curBranch --name-only`
 cd $dir
+
+index=0
+for project in ${projects[@]}
+do
+	echo $diffFiles | grep -q $project
+	res=$?
+	if [[ 0 -eq res ]]; then
+		let index++
+		echoc "$project --changed"
+	fi
+done
+
+if [[ 1 -ne $index ]]; then
+	echoc "$index: changed"
+	echoc "skip for not one project changed!"
+	exit 0
+fi
 
 for project in ${projects[@]}
 do
