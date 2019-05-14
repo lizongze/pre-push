@@ -113,14 +113,18 @@ var prepushContent = '#!/usr/bin/env bash' + os.EOL
 // error instead destroying the whole npm install process.
 //
 // try { fs.writeFileSync(prepush, prepushContent); }
-fs.readdir('./',(err,files)=> {
-	if(err) throw err;
-	console.log('readdir ---- ', files);
-});
+
 try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
 catch (e) {
+  // for mannul call install from root by node when using rush
   hookRelativeUnixPath = path.join('.', 'common', 'temp', hookRelativeUnixPath)
 }
+try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
+catch (e) {
+  // for rush install
+  hookRelativeUnixPath = path.join('.', 'hook')
+}
+
 try { fs.writeFileSync(prepush, fs.readFileSync(hookRelativeUnixPath)); }
 catch (e) {
   console.error('pre-push:');
