@@ -80,8 +80,11 @@ if (!exists(hooks)) fs.mkdirSync(hooks);
 if (exists(prepush) && !fs.lstatSync(prepush).isSymbolicLink()) {
   console.log('pre-push:');
   console.log('pre-push: Detected an existing git pre-push hook');
-  fs.writeFileSync(prepush +'.old', fs.readFileSync(prepush));
-  console.log('pre-push: Old pre-push hook backuped to pre-push.old');
+  // N.B: 'white space' and ':' will throw error in writeFileSync on windows
+  const fileName = prepush + `.old_${new Date().toLocaleString()}`.replace(/ /g, '_').replace(/:/g, '.');
+
+  fs.writeFileSync(fileName, fs.readFileSync(prepush));
+  console.log(`pre-push: Old pre-push hook backuped to ${fileName}`);
   console.log('pre-push:');
 }
 

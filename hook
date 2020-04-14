@@ -43,6 +43,17 @@ elif [[ -x "$LOCAL" ]]; then
   BINARY="$LOCAL"
 fi
 
+
+# prePush="/Users/leo/Documents/gitData/github/front-theory1/apps/link-mobile/hook-index.js"
+touch .gitignore
+sed -i "" "" .gitignore 2>/dev/null
+win=$?
+if [[ 0 -ne $win ]]; then
+    BINARY="node"
+    # prePush="C:\\\\Users\\\\leo\\\\Documents\\\\gitData\\\\front-theory\\\\apps\\\\link-mobile\\\\hook-index.js"
+    # sedPrefix='""'
+fi
+
 if [[ -z "$BINARY" ]]; then
 	exit 1
 fi
@@ -50,11 +61,14 @@ fi
 "$BINARY" -e "require('./rush.json')" 2> /dev/null
 res=$?
 
+prePush="pre-push-for-rush"
+
+
 if [[ $res -ne 0 ]]; then
 	if [[ $* == *--dry-run* ]]; then
 		echoc "--dry-run: execute this hook without side affects"
 	else
-		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")"
+		"$BINARY" "$("$BINARY" -e "console.log(require.resolve('$prePush'))")"
 		res=$?
 		if [[ 0 -ne $res ]]; then
 			exit $res
@@ -95,17 +109,17 @@ else
 			# hit
 			offsetPath=`echo './'$project`
 			cd $offsetPath
-			"$BINARY" -e "require('pre-push-for-rush')" 2> /dev/null
+			"$BINARY" -e "require('$prePush')" 2> /dev/null
 			res=$?
 			if [[ $res -ne 0 ]]; then
-			    msg="$offsetPath Error: Cannot find module 'pre-push-for-rush'"
+			    msg="$offsetPath Error: Cannot find module '$prePush'"
 				# echoc $msg
 			else
 				echoc $offsetPath
 				if [[ $* == *--dry-run* ]]; then
 					echoc "--dry-run: execute this hook without side affects"
 				else
-					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('pre-push-for-rush'))")" $project
+					"$BINARY" "$("$BINARY" -e "console.log(require.resolve('$prePush'))")" $project
 					res=$?
 					if [[ 0 -ne $res ]]; then
 						exit $res
