@@ -81,7 +81,7 @@ if (exists(prepush) && !fs.lstatSync(prepush).isSymbolicLink()) {
   console.log('pre-push:');
   console.log('pre-push: Detected an existing git pre-push hook');
   // N.B: 'white space' and ':' will throw error in writeFileSync on windows
-  const fileName = prepush + `.old_${new Date().toLocaleString()}`.replace(/ /g, '_').replace(/:/g, '.');
+  const fileName = prepush + `.old_${+new Date()}`;
 
   fs.writeFileSync(fileName, fs.readFileSync(prepush));
   console.log(`pre-push: Old pre-push hook backuped to ${fileName}`);
