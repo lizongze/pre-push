@@ -1,6 +1,6 @@
 {
   "name": "pre-push-for-rush",
-  "version": "2.4.1-alpha.1",
+  "version": "2.4.1-beta.0",
   "description": "Automatically install pre-push hooks for your npm modules which support rush.",
   "main": "index.js",
   "scripts": {
